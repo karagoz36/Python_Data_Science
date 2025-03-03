@@ -1,5 +1,6 @@
 import sys
 import time
+import os
 
 
 def ft_tqdm(iterable):
@@ -13,7 +14,7 @@ def ft_tqdm(iterable):
     for index, item in enumerate(iterable, 1):
         # Progress percentage
         progress = index / total
-        bar_len = 64
+        bar_len = os.get_terminal_size().columns - 40
         filled_len = int(progress * bar_len)
 
         # Create progress bar string
