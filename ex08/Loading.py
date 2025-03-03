@@ -1,12 +1,13 @@
 import sys
 import time
 
+
 def ft_tqdm(iterable):
     """
     Custom progress bar similar to tqdm.
     """
 
-    total=len(iterable)
+    total = len(iterable)
     start_time = time.time()
 
     for index, item in enumerate(iterable, 1):
@@ -30,8 +31,12 @@ def ft_tqdm(iterable):
         speed = index / elapsed_time if elapsed_time > 0 else 0
 
         # Print progress bar with tqdm-like format
-        sys.stdout.write(f"\r{int(progress*100)}%|{bar}| {index}/{total} [{formatted_time}<{formatted_eta}, {speed:.2f}it/s]")
+        sys.stdout.write(f"\r{int(progress*100)}%|{bar}| {index}/{total} "
+                         f"[{formatted_time}<{formatted_eta}, "
+                         f"{speed:.2f}it/s]")
         sys.stdout.flush()
-        yield item # Generator: keeps iteration going on
+
+        # Generator: keeps iteration going on
+        yield item
 
     print()
