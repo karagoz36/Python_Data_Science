@@ -3,6 +3,7 @@
 import sys
 from ft_filter import ft_filter
 
+
 def main():
     """
     Filters words from a given string based on a specified length.
@@ -18,8 +19,8 @@ def main():
         except ValueError:
             raise AssertionError("the arguments are bad")
         words = text.split()
-        filtered_words = list(ft_filter(lambda word: len(word) > min_len, words))
-        print(filtered_words)
+        filtered = list(ft_filter(lambda word: len(word) > min_len, words))
+        print(filtered)
 
     except AssertionError as e:
         print(f"AssertionError: {e}")
