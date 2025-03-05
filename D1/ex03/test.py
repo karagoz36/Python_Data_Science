@@ -2,24 +2,29 @@ import numpy as np
 import matplotlib.pyplot as plt
 from load_image import ft_load
 
-def zoom_image(image_array, zoom=200):
+def zoom_image(image_array, zoom_size=200):
     """
-    Calculates the coordinates for zooming and
+    Calculates the coordinates for zooming on the center of an image and
     returns the zoomed portion of the image.
-    Parameters:image_array (np.ndarray, zoom_size (int)
-    Returns: np.ndarray: The zoomed portion of the image
+
+    Parameters:
+        image_array (np.ndarray): Input image as NumPy array
+        zoom_size (int): Number of pixels to extend from center in each direction
+
+    Returns:
+        np.ndarray: The zoomed portion of the image
     """
     # Get image dimensions
     height, width = image_array.shape[0], image_array.shape[1]
 
     # Find the center of the image
-    y, x = height // 2, width // 2
+    center_y, center_x = height // 2, width // 2
 
-    # Calculate slice coordinates ensuring boundaries
-    y_start = max(0, y - zoom)
-    y_end = min(height, y + zoom)
-    x_start = max(0, x - zoom)
-    x_end = min(width, x + zoom)
+    # Calculate slice coordinates ensuring they stay within image boundaries
+    y_start = max(0, center_y - zoom_size)
+    y_end = min(height, center_y + zoom_size)
+    x_start = max(0, center_x - zoom_size)
+    x_end = min(width, center_x + zoom_size)
 
     # Extract and return the zoomed portion
     return image_array[y_start:y_end, x_start:x_end]
@@ -34,8 +39,9 @@ def extract_first_channel(image):
     if len(image.shape) == 3 and image.shape[2] == 3:
         # Convert to grayscale by taking only the first channel
         return image[:, :, 0:1]
-    # Image is already grayscale or has a different format
-    return image
+    else:
+        # Image is already grayscale or has a different format
+        return image
 
 def display_images(original, zoomed):
     """
@@ -57,8 +63,9 @@ def display_images(original, zoomed):
     plt.subplot(1, 2, 2)
     plt.title("Zoomed Image")
 
-    # Handle different image formats
+    # Handle different image formats for display
     if len(zoomed.shape) == 3 and zoomed.shape[2] == 3:
+        # RGB image
         plt.imshow(zoomed)
     elif len(zoomed.shape) == 3 and zoomed.shape[2] == 1:
         # Single-channel 3D image
@@ -73,8 +80,10 @@ def display_images(original, zoomed):
     plt.tight_layout()
     plt.show()
 
-
 def main():
+    """
+    Main function that processes an image, zooms in, and displays results.
+    """
     try:
         # Step 1: Load the image
         image_array = ft_load("animal.jpeg")
@@ -84,20 +93,20 @@ def main():
             return
 
         # Step 2: Apply zooming to image center
-        zoomed = zoom_image(image_array)
+        zoomed_image = zoom_image(image_array)
 
         # Step 3: Extract the first channel
-        zoomed_2d = extract_first_channel(zoomed)
+        zoomed_image_channel = extract_first_channel(zoomed_image)
 
         # Step 4: Print information about the zoomed image
-        print(f"New shape after slicing: {zoomed_2d.shape}")
-        print(zoomed_2d)
+        print(f"New shape after slicing: {zoomed_image_channel.shape}")
+        print(zoomed_image_channel)
 
         # Step 5: Display images
-        display_images(image_array, zoomed_2d)
+        display_images(image_array, zoomed_image_channel)
 
     except Exception as e:
-        print(f"New shape after slicing: {e}")
+        print(f"An error occurred in the program: {e}")
 
 if __name__ == "__main__":
     main()
