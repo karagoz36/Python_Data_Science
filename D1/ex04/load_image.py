@@ -20,10 +20,10 @@ def ft_load(path: str) -> np.ndarray:
         array = np.array(image)
 
         # Print the image dimensions
-        print(f"The shape of image is: {array.shape}")
+        # print(f"The shape of image is: {array.shape}")
 
         # Print the pixel content
-        print(array)
+        # print(array)
 
         return array
 

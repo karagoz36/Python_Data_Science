@@ -1,6 +1,6 @@
-import numpy as np
 import matplotlib.pyplot as plt
 from load_image import ft_load
+
 
 def zoom_image(image_array, zoom=200):
     """
@@ -24,6 +24,7 @@ def zoom_image(image_array, zoom=200):
     # Extract and return the zoomed portion
     return image_array[y_start:y_end, x_start:x_end]
 
+
 def extract_first_channel(image):
     """
     Extracts the first channel from an RGB image.
@@ -36,6 +37,7 @@ def extract_first_channel(image):
         return image[:, :, 0:1]
     # Image is already grayscale or has a different format
     return image
+
 
 def display_images(original, zoomed):
     """
@@ -98,6 +100,7 @@ def main():
 
     except Exception as e:
         print(f"New shape after slicing: {e}")
+
 
 if __name__ == "__main__":
     main()
