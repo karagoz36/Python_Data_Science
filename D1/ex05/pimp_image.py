@@ -2,7 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from load_image import ft_load
 
-
 def display_image(array, title="Image"):
     """
     Displays an image with the given title.
@@ -13,6 +12,7 @@ def display_image(array, title="Image"):
     plt.axis('off')
     plt.tight_layout()
     plt.show()
+
 
 def validate_image(array, check_channels=True):
     """
@@ -27,13 +27,13 @@ def validate_image(array, check_channels=True):
     if len(array.shape) < 2:
         print("Error: Input array must be at least 2D")
         return False
-
     # Check if array has RGB channels if required
     if check_channels and (len(array.shape) < 3 or array.shape[2] < 3):
-        print("Error: Input array must be 3D with at least 3 channels for color operations")
+        print("Error: Input must be 3D with 3 channels for color operations")
         return False
 
     return True
+
 
 def ft_invert(array):
     """
@@ -43,10 +43,8 @@ def ft_invert(array):
     if not validate_image(array, check_channels=False):
         return None
 
-    # Create a copy to avoid modifying the original array
-    inverted = array.copy()
-
     # Invert the colors (255 - pixel value)
+    inverted = array. copy()
     inverted = 255 - inverted
 
     # Display the inverted image
@@ -59,18 +57,13 @@ def ft_red(array):
     """
     Emphasizes the red channel by setting green and blue channels to 0.
     """
-    # Validate input array (needs to check channels)
     if not validate_image(array):
         return None
 
-    # Create a copy to avoid modifying the original array
     red = array.copy()
+    red[:, :, 1] = 0 # Green channel = 0
+    red[:, :, 2] = 0 # Blue channel = 0
 
-    # Set green and blue channels to 0 (keep only red)
-    red[:, :, 1] = 0  # Green channel = 0
-    red[:, :, 2] = 0  # Blue channel = 0
-
-    # Display the red-emphasized image
     display_image(red, "Figure VIII.3: Red")
 
     return red
@@ -80,20 +73,15 @@ def ft_green(array):
     """
     Emphasizes the green channel by setting red and blue channels to 0.
     """
-    # Validate input array (needs to check channels)
     if not validate_image(array):
         return None
 
-    # Create a copy to avoid modifying the original array
-    green = array.copy()
-
     # Set red and blue channels to 0 (keep only green)
+    green = array.copy()
     green[:, :, 0] = 0  # Red channel = 0
     green[:, :, 2] = 0  # Blue channel = 0
 
-    # Display the green-emphasized image
     display_image(green, "Figure VIII.4: Green")
-
     return green
 
 
@@ -101,42 +89,33 @@ def ft_blue(array):
     """
     Emphasizes the blue channel by setting red and green channels to 0.
     """
-    # Validate input array (needs to check channels)
     if not validate_image(array):
         return None
 
-    # Create a copy to avoid modifying the original array
-    blue = array.copy()
-
     # Set red and green channels to 0 (keep only blue)
+    blue = array.copy()
     blue[:, :, 0] = 0  # Red channel = 0
     blue[:, :, 1] = 0  # Green channel = 0
 
-    # Display the blue-emphasized image
     display_image(blue, "Figure VIII.5: Blue")
 
     return blue
-
 
 def ft_grey(array):
     """
     Converts the image to grayscale by averaging the RGB channels.
     """
-    # Validate input array (needs to check channels)
     if not validate_image(array):
         return None
 
-    # Create a copy to avoid modifying the original array
-    grey = array.copy()
-
     # Calculate average of R, G, B channels
+    grey = array.copy()
     grey_channel = (grey[:, :, 0] / 3 + grey[:, :, 1] / 3 + grey[:, :, 2] / 3)
 
     # Set all channels to the averaged value
     for i in range(3):
         grey[:, :, i] = grey_channel
 
-    # Display the grayscale image
     display_image(grey, "Figure VIII.6: Grey")
 
     return grey
