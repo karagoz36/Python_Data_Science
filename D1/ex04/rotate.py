@@ -51,13 +51,22 @@ def transpose_image(image):
     """
     # Check if the image is 3D with a single channel
     if len(image.shape) == 3 and image.shape[2] == 1:
-        # Squeeze to remove the third dimension before transpose
-        squeezed = np.squeeze(image)
-        # Transpose and return
-        return squeezed.T
+        # Squeeze to remove the third dimension
+        image = image[:, :, 0]
+        # squeezed = np.squeeze(image)
 
-    # For 2D images or other cases
-    return image.transpose()
+    # Get dimensions
+    height, width = image.shape[0], image.shape[1]
+
+    # Create a new array for the transposed image
+    transposed = np.zeros((width, height), dtype=image.dtype)
+
+    # Manually transpose the image
+    for i in range(height):
+        for j in range(width):
+            transposed[j, i] = image[i, j]
+
+    return transposed
 
     # .T: Property that returns standard matrix transpose, reversing axes order
     # .transpose(): Method returning view with axes transposed (customizable)
